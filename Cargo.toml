@@ -1,6 +1,6 @@
 [package]
-name = "WakeOnLan-Telegram-bot"
-version = "0.3.0"
+name = "WakeOnLan-Control-Center"
+version = "0.1.1"
 edition = "2021"
 
 [dependencies]
