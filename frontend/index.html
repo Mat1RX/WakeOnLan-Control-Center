@@ -26,7 +26,6 @@
                     </svg>
                 </div>
                 <h2>Control Center</h2>
-                <p class="subtitle"></p>
 
                 <form id="login-form">
                     <div class="input-group">
@@ -59,30 +58,63 @@
                         </svg>
                         <h1>WOL Dashboard</h1>
                     </div>
-                    <button id="logout-btn" class="btn btn-outline">Logout</button>
+                    <div class="user-menu-container">
+                        <button id="user-menu-btn" class="btn btn-outline user-menu-btn">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span id="display-username">User</span>
+                            <svg id="menu-chevron" class="chevron" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div id="user-dropdown" class="dropdown-menu glass-panel hidden">
+                            <div class="dropdown-header">
+                                <div class="dropdown-header-title">
+                                    <span class="dropdown-label">API Server</span>
+                                    <span class="version-badge">__APP_VERSION__</span>
+                                </div>
+                                <p class="dropdown-api-url" id="display-api-url">...</p>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="https://github.com/Mat1RX/WakeOnLan-Control-Center" target="_blank" class="btn btn-outline btn-full btn-sm">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                </svg>
+                                GitHub Repository
+                            </a>
+                            <button id="logout-btn" class="btn btn-danger btn-full btn-sm">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </header>
 
             <main class="dashboard-main">
-                <div class="panel controls-panel">
-                    <div class="panel-header">
-                        <h2>Devices</h2>
-                        <button id="refresh-all-btn" class="btn btn-secondary btn-sm">
-                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
-                                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="23 4 23 10 17 10"></polyline>
-                                <polyline points="1 20 1 14 7 14"></polyline>
-                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-                            </svg>
-                            Refresh All
-                        </button>
-                    </div>
-                    <div id="devices-list" class="devices-grid">
-                        <!-- Devices will be injected here by JS -->
-                        <div class="loading-state">
-                            <div class="spinner"></div>
-                            <p>Loading devices...</p>
-                        </div>
+                <div class="panel-header">
+                    <h2>Devices</h2>
+                    <button id="refresh-all-btn" class="btn btn-secondary btn-sm">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <polyline points="1 20 1 14 7 14"></polyline>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                        </svg>
+                        Refresh All
+                    </button>
+                </div>
+                <div id="devices-list" class="devices-grid">
+                    <!-- Devices will be injected here by JS -->
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading devices...</p>
                     </div>
                 </div>
             </main>
@@ -110,6 +142,8 @@
             </div>
         </div>
     </template>
+
+    <div id="toast-container" class="toast-container"></div>
 
     <script src="app.js"></script>
 </body>

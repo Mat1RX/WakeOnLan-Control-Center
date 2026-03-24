@@ -26,6 +26,15 @@ async fn main() {
         std::process::exit(1);
     }));
 
+    // Security: enforce minimum JWT secret length to resist brute-force
+    if config.jwt_secret.len() < 32 {
+        tracing::error!(
+            "FATAL: jwt_secret is too short ({} chars). Must be >= 32 characters.",
+            config.jwt_secret.len()
+        );
+        std::process::exit(1);
+    }
+
     let app = api::api_router(config.clone());
 
     let tls_config = RustlsConfig::from_pem_file(

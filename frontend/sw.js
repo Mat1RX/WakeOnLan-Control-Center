@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wol-cache-v1';
+const CACHE_NAME = '__CACHE_VERSION__';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -34,8 +34,8 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  
-  // Exclude API calls from caching
+
+  // Exclude API calls from caching — always fetch live
   if (event.request.url.includes('/api/') || event.request.url.includes('/auth/login')) {
       return;
   }

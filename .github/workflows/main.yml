@@ -32,6 +32,11 @@ jobs:
       - name: Install Cross
         run: cargo install cross --git https://github.com/cross-rs/cross
 
+      - name: Inject Version into Cargo.toml
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          sed -i "s/^version = .*/version = \"${VERSION}\"/g" Cargo.toml
+
       - name: Build Binary
         run: |
           # Для MIPS архитектур используем -Z build-std, так как готовых бинарников std нет

@@ -2,6 +2,8 @@
 
 # JWT Secret for generating tokens
 jwt_secret = "your_random_jwt_secret_here"
+# Token expiration time in hours (default: 24)
+token_expiry_hours = 24
 
 # HTTPS Settings
 tls_cert_path = "certs/cert.pem"
