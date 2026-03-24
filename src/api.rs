@@ -48,7 +48,10 @@ pub struct DeviceListResponse {
 
 pub fn api_router(config: Arc<Config>) -> Router {
     let cors = CorsLayer::new()
-        .allow_origin(tower_http::cors::Any)
+        .allow_origin(config.allowed_origin.parse::<axum::http::HeaderValue>().unwrap_or_else(|_| {
+            tracing::error!("FATAL: Invalid allowed_origin in config: {}", config.allowed_origin);
+            std::process::exit(1);
+        }))
         .allow_methods([Method::GET, Method::POST])
         .allow_headers([header::CONTENT_TYPE, header::AUTHORIZATION]);
 

@@ -7,8 +7,8 @@ jwt_secret = "your_random_jwt_secret_here"
 tls_cert_path = "certs/cert.pem"
 tls_key_path = "certs/key.pem"
 bind_address = "0.0.0.0:8443"
-
-# The network interface to use for broadcasting Magic Packets.
+allowed_origin = "https://yourusername.github.io" # Set your Github Pages URL here
+# interface = "br-lan" # Optional: network interface to bind for WOL packetsting Magic Packets.
 # On OpenWrt, 'br-lan' is the standard bridge for the local network.
 interface = "br-lan"
 
