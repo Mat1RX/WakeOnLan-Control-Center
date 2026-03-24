@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
     sync::{
-        atomic::{AtomicU64, Ordering},
+        atomic::{AtomicUsize, Ordering},
         Arc, Mutex,
     },
     time::Duration,
@@ -22,7 +22,7 @@ use tower_http::{cors::CorsLayer, set_header::SetResponseHeaderLayer, trace::Tra
 use crate::{config::Config, wol};
 
 /// Monotonic counter for generating unique JWT IDs.
-static JTI_COUNTER: AtomicU64 = AtomicU64::new(1);
+static JTI_COUNTER: AtomicUsize = AtomicUsize::new(1);
 
 // =============================================================================
 // Types
@@ -32,7 +32,7 @@ static JTI_COUNTER: AtomicU64 = AtomicU64::new(1);
 pub struct Claims {
     pub sub: String,
     pub exp: usize,
-    pub jti: u64,
+    pub jti: usize,
 }
 
 /// Shared application state across all requests.
@@ -40,7 +40,7 @@ pub struct Claims {
 pub struct AppState {
     pub config: Arc<Config>,
     /// Maps jti → (expiry_unix_secs, revoked_at_unix_secs)
-    revoked_tokens: Arc<Mutex<HashMap<u64, (u64, u64)>>>,
+    revoked_tokens: Arc<Mutex<HashMap<usize, (u64, u64)>>>,
     /// Maps username → last_refresh_unix_secs for rate limiting.
     last_refresh: Arc<Mutex<HashMap<String, u64>>>,
 }
@@ -55,7 +55,7 @@ impl AppState {
     }
 
     /// Marks a JTI as revoked. Expired entries are pruned on each call.
-    fn revoke(&self, jti: u64, exp: u64) {
+    fn revoke(&self, jti: usize, exp: u64) {
         let now = unix_now();
         let mut map = self.revoked_tokens.lock().unwrap();
         // Clean up expired tokens
@@ -64,9 +64,9 @@ impl AppState {
     }
 
     /// Returns true if the token is revoked AND the 10s grace period has passed.
-    fn is_revoked(&self, jti: u64) -> bool {
+    fn is_revoked(&self, jti: usize) -> bool {
         let now = unix_now();
-        let mut map = self.revoked_tokens.lock().unwrap();
+        let map = self.revoked_tokens.lock().unwrap();
         if let Some(&(_exp, revoked_at)) = map.get(&jti) {
             // Allow 10 seconds grace period for parallel requests during refresh
             if now.saturating_sub(revoked_at) > 10 {
