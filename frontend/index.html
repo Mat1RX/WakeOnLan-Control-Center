@@ -25,7 +25,8 @@
                         <line x1="12" y1="2" x2="12" y2="12"></line>
                     </svg>
                 </div>
-                <h2>Control Center</h2>
+                <h2>Wake on LAN</h2>
+                <p class="subtitle">Control center</p>
 
                 <form id="login-form">
                     <div class="input-group">
@@ -37,11 +38,16 @@
                     <div class="input-group">
                         <input type="text" id="api-url" placeholder="API URL (e.g. https://router:8443)" required>
                     </div>
-                    <div id="login-error" class="error-message"></div>
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember-me" checked>
+                        <span class="toggle-switch"></span>
+                        <span class="remember-text">Remember me</span>
+                    </label>
                     <button type="submit" class="btn btn-primary" id="login-btn">
                         <span class="btn-text">Authenticate</span>
                         <div class="spinner hidden"></div>
                     </button>
+                    <div id="login-error" class="error-message"></div>
                 </form>
             </div>
         </div>
@@ -60,12 +66,15 @@
                     </div>
                     <div class="user-menu-container">
                         <button id="user-menu-btn" class="btn btn-outline user-menu-btn">
-                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
                             <span id="display-username">User</span>
-                            <svg id="menu-chevron" class="chevron" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <svg id="menu-chevron" class="chevron" viewBox="0 0 24 24" width="14" height="14"
+                                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
@@ -78,14 +87,19 @@
                                 <p class="dropdown-api-url" id="display-api-url">...</p>
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a href="https://github.com/Mat1RX/WakeOnLan-Control-Center" target="_blank" class="btn btn-outline btn-full btn-sm">
-                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            <a href="https://github.com/Mat1RX/WakeOnLan-Control-Center" target="_blank"
+                                class="btn btn-outline btn-full btn-sm">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                    </path>
                                 </svg>
                                 GitHub Repository
                             </a>
                             <button id="logout-btn" class="btn btn-danger btn-full btn-sm">
-                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                                     <polyline points="16 17 21 12 16 7"></polyline>
                                     <line x1="21" y1="12" x2="9" y2="12"></line>

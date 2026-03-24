@@ -159,10 +159,69 @@ input:focus {
 .error-message {
     color: var(--danger-color);
     font-size: 0.875rem;
-    min-height: 1.25rem;
-    margin-bottom: 1rem;
-    text-align: left;
+    text-align: center;
+    display: none;
+    margin-top: 1rem;
 }
+
+.error-message:not(:empty) {
+    display: block;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    user-select: none;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+    width: 100%;
+}
+
+.remember-me:hover {
+    color: var(--text-primary);
+}
+
+.remember-me input {
+    display: none;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+.toggle-switch::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.remember-me input:checked + .toggle-switch {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.remember-me input:checked + .toggle-switch::after {
+    left: 23px;
+    background: white;
+}
+
 
 /* --- Buttons --- */
 .btn {

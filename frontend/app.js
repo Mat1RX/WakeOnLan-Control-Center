@@ -1,7 +1,18 @@
 // =============================================================================
 // State
 // =============================================================================
-let token = sessionStorage.getItem('wol_token');   // Short-lived storage (tab-scoped)
+
+/**
+ * Returns the storage where the token lives.
+ * If the user clicked "Remember me" it is localStorage, otherwise sessionStorage.
+ */
+function tokenStorage() {
+    return localStorage.getItem('wol_remember') === '1'
+        ? localStorage
+        : sessionStorage;
+}
+
+let token = tokenStorage().getItem('wol_token');
 let apiUrl = localStorage.getItem('wol_api_url') || '';
 let devices = [];
 
@@ -34,6 +45,13 @@ const displayApiUrl   = document.getElementById('display-api-url');
 async function init() {
     apiUrlInput.value = apiUrl;
 
+    // Restore remember-me checkbox state (default to true)
+    const rememberMe = document.getElementById('remember-me');
+    if (rememberMe) {
+        const stored = localStorage.getItem('wol_remember');
+        rememberMe.checked = (stored === null) ? true : (stored === '1');
+    }
+
     if (token && apiUrl) {
         const username = localStorage.getItem('wol_username') || 'User';
         if (displayUsername) displayUsername.textContent = username;
@@ -41,7 +59,7 @@ async function init() {
 
         showView('dashboard');
         // Await refresh before loading devices to prevent JTI race issues
-        await refreshToken(); 
+        await refreshToken();
         loadDevices();
     } else {
         showView('login');
@@ -171,8 +189,12 @@ async function handleLogin(e) {
         const data = await response.json();
         token = data.token;
 
-        // Token stored in sessionStorage (tab-scoped, not readable by other tabs)
-        sessionStorage.setItem('wol_token', token);
+        // Persist the remember-me preference BEFORE saving the token
+        const rememberMe = document.getElementById('remember-me');
+        const remember = rememberMe?.checked ?? false;
+        localStorage.setItem('wol_remember', remember ? '1' : '0');
+
+        tokenStorage().setItem('wol_token', token);
         localStorage.setItem('wol_api_url', apiUrl);
         localStorage.setItem('wol_username', username);
 
@@ -192,6 +214,8 @@ async function handleLogin(e) {
 
 function handleLogout() {
     token = null;
+    // Clear token from whichever storage was used
+    localStorage.removeItem('wol_token');
     sessionStorage.removeItem('wol_token');
     showView('login');
 }
@@ -210,7 +234,8 @@ async function refreshToken() {
         if (response.ok) {
             const data = await response.json();
             token = data.token;
-            sessionStorage.setItem('wol_token', token);
+            // Keep the token in whichever storage the user chose
+            tokenStorage().setItem('wol_token', token);
         } else {
             console.warn('Silent token refresh failed, status:', response.status);
         }
