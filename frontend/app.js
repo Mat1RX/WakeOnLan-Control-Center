@@ -85,6 +85,10 @@ async function init() {
             }
         });
     }
+
+    // Finally, reveal the UI after all initialization and view-switching is done
+    const appContainer = document.getElementById('app');
+    if (appContainer) appContainer.classList.add('visible');
 }
 
 // =============================================================================
