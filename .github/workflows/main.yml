@@ -46,7 +46,7 @@ jobs:
       - name: Compress and Hash
         run: |
           sudo apt-get update && sudo apt-get install -y upx-ucl
-          BINARY="target/${{ matrix.target }}/release/WakeOnLan-Telegram-bot"
+          BINARY="target/${{ matrix.target }}/release/WakeOnLan-Control-Center"
           NEW_NAME="wol-bot-${{ matrix.target }}"
           
           if [ -f "$BINARY" ]; then
